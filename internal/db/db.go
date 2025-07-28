@@ -26,5 +26,8 @@ func Connect() *gorm.DB {
 		log.Fatalf("Auto migration failed: %v", err)
 	}
 
+	// Seed the database with sample data
+	Seed(db)
+
 	return db
 }
