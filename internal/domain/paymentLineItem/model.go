@@ -24,8 +24,8 @@ func (p PaymentLineItem) GetID() string { return p.ID.String() }
 func (p PaymentLineItem) GetUID() string { return p.UID.String() }
 func (p PaymentLineItem) GetVersion() int { return p.Version }
 
-func (p *PaymentLineItem) SetCreatedAt(t time.Time) { p.CreatedAt = t }
-func (p *PaymentLineItem) SetUpdatedAt(t time.Time) { p.UpdatedAt = t }
+func (p PaymentLineItem) SetCreatedAt(t time.Time) PaymentLineItem { p.CreatedAt = t; return p }
+func (p PaymentLineItem) SetUpdatedAt(t time.Time) PaymentLineItem { p.UpdatedAt = t; return p }
 
 func (p PaymentLineItem) CopyForNewVersion() PaymentLineItem {
 	return PaymentLineItem{

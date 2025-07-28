@@ -12,8 +12,8 @@ type SCDModel[T any] interface {
 	GetUID() string
 	GetVersion() int
 	CopyForNewVersion() T
-	SetCreatedAt(time.Time)
-	SetUpdatedAt(time.Time)
+	SetCreatedAt(time.Time) T
+	SetUpdatedAt(time.Time) T
 }
 
 // SCDQueryBuilder provides a fluent interface for building SCD-aware queries

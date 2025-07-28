@@ -46,8 +46,8 @@ func NewQueryBuilder[T SCDModel[T]](db *gorm.DB, manager *SCDManager[T]) SCDQuer
 
 func (m *SCDManager[T]) Create(entity T) (T, error) {
 	now := time.Now()
-	entity.SetCreatedAt(now)
-	entity.SetUpdatedAt(now)
+	entity = entity.SetCreatedAt(now)
+	entity = entity.SetUpdatedAt(now)
 	err := m.db.Create(&entity).Error
 	return entity, err
 }
@@ -70,8 +70,8 @@ func (m *SCDManager[T]) Update(uid string, updateFn func(T) T) (T, error) {
 	newVersion = updateFn(newVersion)
 	
 	now := time.Now()
-	newVersion.SetCreatedAt(now)
-	newVersion.SetUpdatedAt(now)
+	newVersion = newVersion.SetCreatedAt(now)
+	newVersion = newVersion.SetUpdatedAt(now)
 	
 	err = m.db.Create(&newVersion).Error
 	return newVersion, err
@@ -90,8 +90,8 @@ func (m *SCDManager[T]) Query() SCDQueryBuilder[T] {
 func (m *SCDManager[T]) CreateBatch(entities []T) error {
 	now := time.Now()
 	for i := range entities {
-		entities[i].SetCreatedAt(now)
-		entities[i].SetUpdatedAt(now)
+		entities[i] = entities[i].SetCreatedAt(now)
+		entities[i] = entities[i].SetUpdatedAt(now)
 	}
 	return m.db.CreateInBatches(entities, 100).Error
 }
@@ -290,7 +290,6 @@ func (qb *queryBuilder[T]) buildQuery() *gorm.DB {
 
 // Legacy compatibility - keeping old methods for gradual migration
 func (m *SCDManager[T]) GetLatest() *gorm.DB {
-	var dummy T
 	return m.Query().Latest().Raw()
 }
 
@@ -306,8 +305,8 @@ func (m *SCDManager[T]) Insert(newItem T) error {
 func (m *SCDManager[T]) CreateNewVersion(old T) (T, error) {
 	newItem := old.CopyForNewVersion()
 	now := time.Now()
-	newItem.SetCreatedAt(now)
-	newItem.SetUpdatedAt(now)
+	newItem = newItem.SetCreatedAt(now)
+	newItem = newItem.SetUpdatedAt(now)
 	err := m.db.Create(&newItem).Error
 	return newItem, err
 }

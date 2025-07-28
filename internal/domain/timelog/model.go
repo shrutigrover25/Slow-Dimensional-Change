@@ -25,8 +25,8 @@ func (t Timelog) GetID() string { return t.ID.String() }
 func (t Timelog) GetUID() string { return t.UID.String() }
 func (t Timelog) GetVersion() int { return t.Version }
 
-func (t *Timelog) SetCreatedAt(time time.Time) { t.CreatedAt = time }
-func (t *Timelog) SetUpdatedAt(time time.Time) { t.UpdatedAt = time }
+func (t Timelog) SetCreatedAt(time time.Time) Timelog { t.CreatedAt = time; return t }
+func (t Timelog) SetUpdatedAt(time time.Time) Timelog { t.UpdatedAt = time; return t }
 
 func (t Timelog) CopyForNewVersion() Timelog {
 	return Timelog{
